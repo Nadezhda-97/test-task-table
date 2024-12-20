@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import axios from "axios";
 import sortUsers from "../utils/sortUsers";
 import {
@@ -11,12 +11,13 @@ import {
   TableCell,
   InfoBlock,
 } from "../styles/myStyles";
+import { User, SortConfig, Value } from "../types/myTypes";
 
-const DataTable = () => {
-  const [user, setUser] = useState(null);
-  const [users, setUsers] = useState([]);
-  const [filterParam, setFilterParam] = useState("");
-  const [sortConfig, setSortConfig] = useState({
+const DataTable: React.FC = () => {
+  const [user, setUser] = useState<User | null>(null);
+  const [users, setUsers] = useState<User[]>([]);
+  const [filterParam, setFilterParam] = useState<string>("");
+  const [sortConfig, setSortConfig] = useState<SortConfig>({
     field: null,
     direction: 'ascending',
   });
@@ -31,10 +32,10 @@ const DataTable = () => {
   };
 
   const handleFilter = () => {
-    const filteredUsers = users.filter((user) => {
-      const values = Object.values(user);
+    const filteredUsers: User[] = users.filter((user: User) => {
+      const values: Value[] = Object.values(user);
       return values
-        .map((value) => 
+        .map((value: Value) => 
           typeof value === 'string' ? value.toLowerCase() : value
         )
         .includes(filterParam.toLowerCase())
@@ -42,19 +43,19 @@ const DataTable = () => {
     setUsers(filteredUsers);
   };
 
-  const handleSort = (field) => {
-    let direction = "ascending";
+  const handleSort = (field: keyof User) => {
+    let direction: "ascending" | "descending" = "ascending";
 
     if (sortConfig.field === field && sortConfig.direction === "ascending") {
       direction = "descending";
     }
 
     setSortConfig({ field, direction });
-    const sortedUsers = sortUsers(users, sortConfig);
+    const sortedUsers: User[] = sortUsers(users, sortConfig);
     setUsers(sortedUsers);
   };
 
-  const getSortIcon = (field) => {
+  const getSortIcon = (field: keyof User) => {
     if (sortConfig.field === field) {
       return sortConfig.direction === "ascending" ? "▲" : "▼";
     }
