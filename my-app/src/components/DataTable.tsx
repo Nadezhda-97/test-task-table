@@ -1,6 +1,16 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
 import sortUsers from "../utils/sortUsers";
+import {
+  InputContainer,
+  Input,
+  Button,
+  Table,
+  TableHeader,
+  TableRow,
+  TableCell,
+  InfoBlock,
+} from "../styles/myStyles";
 
 const DataTable = () => {
   const [user, setUser] = useState(null);
@@ -57,9 +67,9 @@ const DataTable = () => {
 
   return (
     <div>
-      <div>
+      <InputContainer>
         <label>
-          <input
+          <Input
             type="text"
             placeholder="Параметр фильтрации"
             value={filterParam}
@@ -67,45 +77,46 @@ const DataTable = () => {
             autoFocus
           />
         </label>
-        <button type="button" onClick={handleFilter}>
+        <Button type="button" onClick={handleFilter}>
           Найти
-        </button>
-        <table>
-          <thead>
-            <tr>
-              <th onClick={() => handleSort("id")}>
-                id{getSortIcon("id")}
-              </th>
-              <th onClick={() => handleSort("firstName")}>
-                Имя{getSortIcon("firstName")}
-              </th>
-              <th onClick={() => handleSort("lastName")}>
-                Фамилия{getSortIcon("lastName")}
-              </th>
-              <th onClick={() => handleSort("email")}>
-                Email{getSortIcon("email")}
-              </th>
-              <th onClick={() => handleSort("phone")}>
-                Телефон{getSortIcon("phone")}
-              </th>
-            </tr>
-          </thead>
-          <tbody>
-            {users.length === 0
-              ? "Ничего не найдено"
-              : users.map(user => (
-              <tr key={user.id} onClick={() => setUser(user)}>
-                <td>{user.id}</td>
-                <td>{user.firstName}</td>
-                <td>{user.lastName}</td>
-                <td>{user.email}</td>
-                <td>{user.phone}</td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
+        </Button>
+      </InputContainer>
+      <Table>
+        <thead>
+          <tr>
+            <TableHeader onClick={() => handleSort("id")}>
+              id{getSortIcon("id")}
+            </TableHeader>
+            <TableHeader onClick={() => handleSort("firstName")}>
+              Имя{getSortIcon("firstName")}
+            </TableHeader>
+            <TableHeader onClick={() => handleSort("lastName")}>
+              Фамилия{getSortIcon("lastName")}
+            </TableHeader>
+            <TableHeader onClick={() => handleSort("email")}>
+              Email{getSortIcon("email")}
+            </TableHeader>
+            <TableHeader onClick={() => handleSort("phone")}>
+              Телефон{getSortIcon("phone")}
+            </TableHeader>
+          </tr>
+        </thead>
+        <tbody>
+          {users.length === 0
+            ? "Ничего не найдено"
+            : users.map(user => (
+            <TableRow key={user.id} onClick={() => setUser(user)}>
+              <TableCell>{user.id}</TableCell>
+              <TableCell>{user.firstName}</TableCell>
+              <TableCell>{user.lastName}</TableCell>
+              <TableCell>{user.email}</TableCell>
+              <TableCell>{user.phone}</TableCell>
+            </TableRow>
+          ))}
+        </tbody>
+      </Table>
         {user && (
-          <div>
+          <InfoBlock>
             <p>
               <strong>Идентификатор:</strong> {user.id}
             </p>
@@ -121,9 +132,8 @@ const DataTable = () => {
             <p>
               <strong>Телефон:</strong> {user.phone}
             </p>
-          </div>
+          </InfoBlock>
         )}
-      </div>
     </div>
   );
 };
