@@ -44,6 +44,13 @@ const DataTable = () => {
     setUsers(sortedUsers);
   };
 
+  const getSortIcon = (field) => {
+    if (sortConfig.field === field) {
+      return sortConfig.direction === "ascending" ? "▲" : "▼";
+    }
+    return "";
+  };
+
   useEffect(() => {
     addUsers();
   }, [filterParam]);
@@ -66,11 +73,21 @@ const DataTable = () => {
         <table>
           <thead>
             <tr>
-              <th onClick={() => handleSort("id")}>id</th>
-              <th onClick={() => handleSort("firstName")}>Имя</th>
-              <th onClick={() => handleSort("lastName")}>Фамилия</th>
-              <th onClick={() => handleSort("email")}>Email</th>
-              <th onClick={() => handleSort("phone")}>Телефон</th>
+              <th onClick={() => handleSort("id")}>
+                id{getSortIcon("id")}
+              </th>
+              <th onClick={() => handleSort("firstName")}>
+                Имя{getSortIcon("firstName")}
+              </th>
+              <th onClick={() => handleSort("lastName")}>
+                Фамилия{getSortIcon("lastName")}
+              </th>
+              <th onClick={() => handleSort("email")}>
+                Email{getSortIcon("email")}
+              </th>
+              <th onClick={() => handleSort("phone")}>
+                Телефон{getSortIcon("phone")}
+              </th>
             </tr>
           </thead>
           <tbody>
