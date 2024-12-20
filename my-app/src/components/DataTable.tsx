@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import axios from "axios";
 import sortUsers from "../utils/sortUsers";
 
 const DataTable = () => {
@@ -12,9 +13,8 @@ const DataTable = () => {
 
   const addUsers = async () => {
     try {
-      const response = await fetch('http://www.filltext.com/?rows=32&id=%7Bnumber%7C1000%7D&firstName=%7BfirstName%7D&lastName=%7BlastName%7D&email=%7Bemail%7D&phone=%7Bphone%7C(xxx)xxx-xx-xx%7D');
-      const data = await response.json();
-      setUsers(data);
+      const response = await axios.get('http://www.filltext.com/?rows=32&id=%7Bnumber%7C1000%7D&firstName=%7BfirstName%7D&lastName=%7BlastName%7D&email=%7Bemail%7D&phone=%7Bphone%7C(xxx)xxx-xx-xx%7D');
+      setUsers(response.data);
     } catch (error) {
       console.error(error);
     }
