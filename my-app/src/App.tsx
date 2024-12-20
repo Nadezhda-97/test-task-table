@@ -1,9 +1,10 @@
 import DataTable from './components/DataTable'
-import './App.css'
+import { GlobalStyle } from './styles/myStyles';
 
 const App = () => {
   return (
     <>
+      <GlobalStyle />
       <DataTable />
     </>
   )
