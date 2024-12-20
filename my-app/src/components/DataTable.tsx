@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import sortUsers from "../utils/sortUsers";
 
 const DataTable = () => {
+  const [user, setUser] = useState(null);
   const [users, setUsers] = useState([]);
   const [filterParam, setFilterParam] = useState("");
   const [sortConfig, setSortConfig] = useState({
@@ -73,8 +74,10 @@ const DataTable = () => {
             </tr>
           </thead>
           <tbody>
-            {users.map(user => (
-              <tr key={user.id}>
+            {users.length === 0
+              ? "Ничего не найдено"
+              : users.map(user => (
+              <tr key={user.id} onClick={() => setUser(user)}>
                 <td>{user.id}</td>
                 <td>{user.firstName}</td>
                 <td>{user.lastName}</td>
@@ -84,6 +87,25 @@ const DataTable = () => {
             ))}
           </tbody>
         </table>
+        {user && (
+          <div>
+            <p>
+              <strong>Идентификатор:</strong> {user.id}
+            </p>
+            <p>
+              <strong>Имя:</strong> {user.firstName}
+            </p>
+            <p>
+              <strong>Фамилия:</strong> {user.lastName}
+            </p>
+            <p>
+              <strong>Email:</strong> {user.email}
+            </p>
+            <p>
+              <strong>Телефон:</strong> {user.phone}
+            </p>
+          </div>
+        )}
       </div>
     </div>
   );
